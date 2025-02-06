@@ -79,11 +79,12 @@
         list-style-type: none;
         padding: 0px 4%;
         align-items: center;
+        justify-content: space-between;
         width: 100%;
     }
 
     nav ul li {
-        width: 25%;
+        width: auto;
         text-align: center;
     }
 

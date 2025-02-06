@@ -10,6 +10,11 @@
 
 <body>
     <?php
+    // Nếu không có session, thì sẽ tạo session
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+
     include 'header.php';
     ?>
     <?php
