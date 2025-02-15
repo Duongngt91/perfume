@@ -1,3 +1,35 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    // Kiểm tra dữ liệu hợp lệ trước khi lưu vào session
+    if (!isset($data['masp']) || !isset($data['tensp']) || !isset($data['gia']) || !isset($data['soluong'])) {
+        echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ"]);
+        exit;
+    }
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+    $found = false;
+    foreach ($_SESSION['cart'] as &$item) {
+        if ($item['id'] == $data['id']) {
+            $item['quantity'] += 1;
+            $found = true;
+            break;
+        }
+    }
+
+    if (!$found) {
+        $_SESSION['cart'][] = $data;
+    }
+
+    echo json_encode(["status" => "success", "cart" => $_SESSION['cart']]);
+    exit;
+}
+?>
+
 <html>
 
 <head>
@@ -24,45 +56,6 @@
     include 'aside.php';
     ?>
     <article>
-        <?php
-        session_start(); // Đặt ở đầu file, không có output nào trước nó
-        header('Content-Type: application/json');
-        ob_start(); // Bật output buffering để tránh lỗi header
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $data = json_decode(file_get_contents("php://input"), true);
-
-            // Kiểm tra dữ liệu hợp lệ trước khi lưu vào session
-            if (!isset($data['id']) || !isset($data['name']) || !isset($data['price']) || !isset($data['quantity'])) {
-                echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ"]);
-                exit;
-            }
-
-            if (!isset($_SESSION['cart'])) {
-                $_SESSION['cart'] = [];
-            }
-
-            $found = false;
-            foreach ($_SESSION['cart'] as &$item) {
-                if ($item['id'] == $data['id']) {
-                    $item['quantity'] += 1;
-                    $found = true;
-                    break;
-                }
-            }
-
-            if (!$found) {
-                $_SESSION['cart'][] = $data;
-            }
-
-            echo json_encode(["status" => "success", "cart" => $_SESSION['cart']]);
-            exit;
-        }
-        ?>
-        <?php
-        session_start();
-        ?>
-
         <h2>Giỏ hàng của bạn</h2>
         <table border="1">
             <tr>

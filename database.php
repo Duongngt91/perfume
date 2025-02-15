@@ -34,7 +34,7 @@ include 'connect.php';
         GIOITINH NVARCHAR(200),
         EMAIL VARCHAR(100) DEFAULT 'Chưa cập nhật',
         PHANQUYEN VARCHAR(10) DEFAULT 'user',
-        PRIMARY KEY (TENDANGNHAP, SODT)
+        PRIMARY KEY (MAND)
     )";
     if (!mysqli_query($conn, $NGUOIDUNG)) {
         die("Không thể tạo bảng NGUOIDUNG: " . mysqli_error($conn));
@@ -132,6 +132,21 @@ include 'connect.php';
         die("Không thêm được dữ liệu vào bảng SANPHAM: " . mysqli_error($conn));
     }
     echo "Đã thêm dữ liệu vào bảng SANPHAM.<br>";
+
+    // Tạo bảng giohang
+    $GIOHANG = "CREATE TABLE IF NOT EXISTS GIOHANG (
+        MAGH VARCHAR(50) NOT NULL,
+        MAND VARCHAR(200) NOT NULL,
+        MASP VARCHAR(50) NOT NULL,
+        SOLUONG INT NOT NULL,
+        PRIMARY KEY (MAGH),
+        FOREIGN KEY (MAND) REFERENCES NGUOIDUNG(MAND),
+        FOREIGN KEY (MASP) REFERENCES SANPHAM(MASP)
+    )";
+
+    if (!mysqli_query($conn, $GIOHANG)) {
+        die("Không tạo được bảng GIOHANG: " . mysqli_error($conn));
+    }
 
     // đóng kết nối
     closeconnection($conn);
