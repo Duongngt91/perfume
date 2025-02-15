@@ -1,4 +1,9 @@
 <?php
+// Nếu không có session, thì sẽ tạo session
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
 
@@ -14,8 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $found = false;
     foreach ($_SESSION['cart'] as &$item) {
-        if ($item['id'] == $data['id']) {
-            $item['quantity'] += 1;
+        if ($item['masp'] == $data['masp']) {
+            $item['soluong'] += 1;
             $found = true;
             break;
         }
@@ -42,11 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <?php
-    // Nếu không có session, thì sẽ tạo session
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-
     include 'header.php';
     ?>
     <?php
@@ -70,16 +70,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!empty($_SESSION['cart'])) {
                 foreach ($_SESSION['cart'] as $item) {
                     // Kiểm tra dữ liệu trước khi sử dụng
-                    if (!isset($item['name']) || !isset($item['price']) || !isset($item['quantity'])) {
+                    if (!isset($item['tensp']) || !isset($item['gia']) || !isset($item['soluong'])) {
                         continue;
                     }
 
-                    $subtotal = $item['price'] * $item['quantity'];
+                    $subtotal = $item['gia'] * $item['soluong'];
                     $total += $subtotal;
                     echo "<tr>
-                    <td>{$item['name']}</td>
-                    <td>" . number_format($item['price'], 0, ',', '.') . " đ</td>
-                    <td>{$item['quantity']}</td>
+                    <td>{$item['tensp']}</td>
+                    <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
+                    <td>{$item['soluong']}</td>
                     <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
                   </tr>";
                 }

@@ -25,7 +25,7 @@
         if (isset($_SESSION['username'])): ?>
             <?php if ($_SESSION['phanquyen'] === 'user'): ?>
                 <li>
-                    <a href="#">
+                    <a href="cart.php">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Giỏ hàng
                     </a>
