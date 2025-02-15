@@ -74,6 +74,15 @@ if (!$product) {
                                             soluong: formData.get('soluong')
                                         };
 
+                                        // Hàm hiển thị thông báo
+                                        const showNotification = () => {
+                                            const notification = document.querySelector('.notification');
+                                            notification.style.display = 'block';
+                                            setTimeout(() => {
+                                                notification.style.display = 'none';
+                                            }, 3000);
+                                        };
+
                                         fetch('cart.php', {
                                                 method: 'POST',
                                                 headers: {
@@ -82,7 +91,9 @@ if (!$product) {
                                                 body: JSON.stringify(data)
                                             })
                                             .then(response => response.json())
-                                            .then(data => console.log(data))
+                                            .then(data => {
+                                                showNotification();
+                                            })
                                             .catch(error => console.error('Error:', error));
                                     });
                                 </script>
@@ -110,6 +121,12 @@ if (!$product) {
             </tr>
         </table>
     </article>
+
+    <!-- Notification -->
+    <aside class="notification">
+        <p>Đã thêm sản phẩm vào giỏ hàng.</p>
+    </aside>
+
     <?php include 'footer.php'; ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -164,5 +181,16 @@ if (!$product) {
     .btnpay:hover {
         background-color: #FF3300;
         color: #000;
+    }
+
+    .notification {
+        position: fixed;
+        right: 10px;
+        top: 10px;
+        background-color:rgb(56, 209, 68);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        display: none;
     }
 </style>
