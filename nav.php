@@ -44,16 +44,15 @@
                     <?php echo "Chào " .  $_SESSION['username'] . " (Đăng Xuất)" ?>
                 </a>
             </li>
-        <?php else: ?>
+            <?php else: ?>
+            <?php if (basename($_SERVER['PHP_SELF']) != 'dangnhap.php'): ?>
+                <li><a href='dangnhap.php'>Đăng Nhập</a></li>
+            <?php endif; ?>
 
-            <li><a href='dangky.php'>Đăng Ký</a></li>
-
-
-            <li><a href='dangnhap.php'>Đăng Nhập</a></li>
-
-
-        <?php endif;
-        ?>
+            <?php if (basename($_SERVER['PHP_SELF']) != 'dangky.php'): ?>
+                <li><a href='dangky.php'>Đăng Ký</a></li>
+            <?php endif; ?>
+        <?php endif; ?>
 
     </ul>
 </nav>
