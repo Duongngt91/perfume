@@ -56,7 +56,7 @@ if (!$product) {
                                     <input type="text" name="masp" value="<?= htmlspecialchars($product['MASP']); ?>" hidden>
                                     <input type="text" name="tensp" value="<?= htmlspecialchars($product['TENSP']); ?>" hidden>
                                     <input type="text" name="gia" value="<?= intval($product['GIA']); ?>" hidden>
-                                    <input type="text" name="soluong" class="soluong" value="1" hidden>
+                                    <input type="number" name="soluong" class="soluong" value="1" hidden id="formSoluong">
                                     <button type="submit" class="btnmore" style="cursor: pointer; border: none;">
                                         <i class="fa-solid fa-cart-shopping"></i> THÊM GIỎ HÀNG
                                     </button>
@@ -139,6 +139,9 @@ if (!$product) {
                 if (value > 1) {
                     value--;
                     input.value = value;
+
+                    const formSoluong = document.getElementById('formSoluong');
+                    formSoluong.value = value;
                 }
             });
 
@@ -146,6 +149,9 @@ if (!$product) {
                 var value = parseInt(input.value, 10);
                 value++;
                 input.value = value;
+
+                const formSoluong = document.getElementById('formSoluong');
+                formSoluong.value = value;
             });
         });
     </script>

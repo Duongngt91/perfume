@@ -1,7 +1,7 @@
 <?php
 function openconnection()
 {
-    $dbhost = "localhost";
+    $dbhost = "localhost:3307";
     $dbuser = "root";
     $dbpass = "";
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass);

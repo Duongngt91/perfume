@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $found = false;
     foreach ($_SESSION['cart'] as &$item) {
         if ($item['masp'] == $data['masp']) {
-            $item['soluong'] += 1;
+            $item['soluong'] += $data['soluong'];
             $found = true;
             break;
         }
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <tr>
             <td colspan="2" align="left">
                 <a href="pay.php" style="text-decoration: none; color: blue; font-size: 16px;">
-                     Thanh toán
+                    Thanh toán
                 </a>
             </td>
         </tr>
