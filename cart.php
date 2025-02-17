@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Giỏ hàng của bạn</h2>
         <table border="1">
             <tr>
-                <!-- <th>Hình ảnh</th> -->
+                <th>Hình ảnh</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá</th>
                 <th>Số lượng</th>
@@ -77,7 +77,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $subtotal = $item['gia'] * $item['soluong'];
                     $total += $subtotal;
+
+                    include 'connect.php';
+                    $conn = openconnection();
+
+                    // Truy vấn dữ liệu từ database
+                    $sql = "SELECT * FROM sanpham WHERE masp = '{$item['masp']}'";
+                    $result = mysqli_query($conn, $sql);
+                    $product = mysqli_fetch_assoc($result);
+
                     echo "<tr>
+                    <td><img src='{$product['HINHANH']}' alt='imgPerfume' width='100'></td>
                     <td>{$item['tensp']}</td>
                     <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
                     <td>{$item['soluong']}</td>
