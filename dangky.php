@@ -23,7 +23,7 @@
     if ($conn->connect_error) {
         echo "<p class = 'zz'>Không thể kết nối được MySQL</p>";
     }
-    mysqli_select_db($conn, "");
+    mysqli_select_db($conn, "Perfume");
 
     if (isset($_POST["btnDangKy"])) {
         $Surname = $_POST['txtSurname'];

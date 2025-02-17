@@ -59,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Giỏ hàng của bạn</h2>
         <table border="1">
             <tr>
+                <!-- <th>Hình ảnh</th> -->
                 <th>Tên sản phẩm</th>
                 <th>Giá</th>
                 <th>Số lượng</th>
@@ -92,7 +93,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td><strong><?php echo number_format($total, 0, ',', '.'); ?> đ</strong></td>
             </tr>
         </table>
-        <a href="checkout.php">Thanh toán</a>
+        <tr>
+            <td colspan="2" align="left">
+                <a href="pay.php" style="text-decoration: none; color: blue; font-size: 16px;">
+                     Thanh toán
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="left">
+                <a href="trangchu.php" style="text-decoration: none; color: blue; font-size: 16px;">
+                    &larr; Tiếp tục mua hàng
+                </a>
+            </td>
+        </tr>
     </article>
     <?php
     include 'footer.php';
