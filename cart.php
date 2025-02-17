@@ -78,7 +78,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $subtotal = $item['gia'] * $item['soluong'];
                     $total += $subtotal;
 
-                    include 'connect.php';
+                    // Nếu chưa có openconnection() và closeconnection() thì thêm vào
+                    if (!function_exists('openconnection')) {
+                        include 'connect.php';
+                    }
                     $conn = openconnection();
 
                     // Truy vấn dữ liệu từ database
