@@ -68,7 +68,43 @@
                     </div>
                 </ul>
                 <ul>
-
+                    <!-- tạo bảng thông tin sản phẩm -->
+                    <li>
+                        <h3>Thông tin sản phẩm</h3>
+                    </li>
+                    <table border="1">
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng</th>
+                        </tr>
+                        <?php
+                        $total = 0;
+                        if (!empty($_SESSION['cart'])) {
+                            foreach ($_SESSION['cart'] as $item) {
+                                // Kiểm tra dữ liệu trước khi sử dụng
+                                if (!isset($item['tensp']) || !isset($item['gia']) || !isset($item['soluong'])) {
+                                    continue;
+                                }
+                                $subtotal = $item['gia'] * $item['soluong'];
+                                $total += $subtotal;
+                                echo "<tr>
+                                <td>{$item['tensp']}</td>
+                                <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
+                                <td>{$item['soluong']}</td>
+                                <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
+                              </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='4'>Giỏ hàng trống</td></tr>";
+                        }
+                        ?>
+                        <tr>
+                            <td colspan="3"><strong>Tổng cộng</strong></td>
+                            <td><strong><?php echo number_format($total, 0, ',', '.'); ?> đ</strong></td>
+                        </tr>
+                    </table>
                     <button type="submit">Xác nhận thanh toán</button>
                 </ul>
                 <script>
@@ -94,12 +130,30 @@
     form {
         display: flex;
         justify-content: space-between;
+        margin: 0 10%;
+        
     }
 
     form ul {
         list-style-type: none;
         padding: 0;
+        padding: 20px 20px;
+        border: 2px solid gray;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px 2px gray;
+        overflow: hidden;
     }
 
-    .bank-info {}
+    form ul li {
+        padding: 5px 5px;
+        display: block;
+    }
+
+    .bankQR {
+        position: relative;
+    }
+
+    .bank-info {
+        position: absolute;
+    }
 </style>

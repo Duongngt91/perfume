@@ -1,10 +1,29 @@
 <?php
+
 // Nếu không có session, thì sẽ tạo session
 if (!isset($_SESSION)) {
     session_start();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //// Xử lý xóa sản phẩm khỏi giỏ hàng
+    if (isset($_GET["action"]) && $_GET["action"] == "remove") {
+        if (!isset($_GET["masp"])) {
+            echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ"]);
+            exit;
+        }
+
+        $masp = $_GET["masp"];
+        foreach ($_SESSION['cart'] as $index => $item) {
+            if ($item['masp'] == $masp) {
+                unset($_SESSION['cart'][$index]);
+                break;
+            }
+        }
+
+        echo json_encode(["status" => "success", "cart" => $_SESSION['cart']]);
+        exit;
+    }
     $data = json_decode(file_get_contents("php://input"), true);
 
     // Kiểm tra dữ liệu hợp lệ trước khi lưu vào session
@@ -39,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <meta charset="utf-8">
-    <title>Đăng nhập thư viện</title>
+    <title>Giỏ hàng</title>
     <link rel="stylesheet" href="trangchu.css">
     <link rel="icon" type="image/x-icon" href="anh/logo.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -78,7 +97,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $subtotal = $item['gia'] * $item['soluong'];
                     $total += $subtotal;
 
-                    include 'connect.php';
+                    // Nếu chưa có openconnection() và closeconnection() thì thêm vào
+                    if (!function_exists('openconnection')) {
+                        include 'connect.php';
+                    }
                     $conn = openconnection();
 
                     // Truy vấn dữ liệu từ database
@@ -92,6 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
                     <td>{$item['soluong']}</td>
                     <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
+                    <td><a href='?action=remove&$masp={$item['masp']}' style='color: red;'>Xóa</a></td>
                   </tr>";
                 }
             } else {
