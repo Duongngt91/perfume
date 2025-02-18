@@ -10,7 +10,7 @@
             <a href=""><i class="fa-solid fa-bars"></i> MENU</a>
         </li>
         <li class="search_nav">
-            <form action="">
+            <form action="timkiem.php" method="GET">
                 <input type="search" name="search" class="search_nav" style="margin-top:0px; background: white; color: black;
                 font-size: 14px;border: none; outline: none; background: transparent;" placeholder="Bạn cần tìm gì...">
                 <label for=""><i class="fa-solid fa-magnifying-glass" style="right: -210px; color: white;"></i></label>
