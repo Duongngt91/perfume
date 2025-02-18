@@ -63,6 +63,35 @@
                             } else {
                                 echo "<tr><td colspan='5'>Giỏ hàng trống</td></tr>";
                             }
+                            if (!empty($_SESSION['pay'])) {
+                                foreach ($_SESSION['pay'] as $item) {
+                                    // Kiểm tra dữ liệu trước khi sử dụng
+                                    if (!isset($item['tensp']) || !isset($item['gia']) || !isset($item['soluong'])) {
+                                        continue;
+                                    }
+                                    $subtotal = $item['gia'] * $item['soluong'];
+                                    $total += $subtotal;
+                                    // Nếu chưa có openconnection() và closeconnection() thì thêm vào
+                                    if (!function_exists('openconnection')) {
+                                        include 'connect.php';
+                                    }
+                                    $conn = openconnection();
+
+                                    // Truy vấn dữ liệu từ database
+                                    $sql = "SELECT * FROM sanpham WHERE masp = '{$item['masp']}'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $product = mysqli_fetch_assoc($result);
+                                    echo "<tr>
+                                    <td><img src='{$product['HINHANH']}' alt='imgPerfume' width='100'></td>
+                                    <td>{$item['tensp']}</td>
+                                    <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
+                                    <td>{$item['soluong']}</td>
+                                    <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
+                                  </tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='5'>Giỏ hàng trống</td></tr>";
+                            }
                             ?>
                             <tr>
                                 <td colspan="4"><strong>Tổng cộng</strong></td>
