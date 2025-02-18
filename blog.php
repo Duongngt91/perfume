@@ -122,16 +122,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             })
                                             .then(response => response.json())
                                             .then(data => {
-                                                showNotification();
+                                                // showNotification();
                                             })
                                             .catch(error => console.error('Error:', error));
                                     });
                                 </script>
                             </td>
                             <td>
-                                <a class="btnpay" href="pay.php" style="cursor: pointer;">
-                                    <i class="fa-brands fa-cc-amazon-pay"></i> THANH TOÁN
-                                </a>
+                                <form action="">
+                                    <input type="text" name="masp" value="<?= htmlspecialchars($product['MASP']); ?>" hidden>
+                                    <input type="text" name="tensp" value="<?= htmlspecialchars($product['TENSP']); ?>" hidden>
+                                    <input type="text" name="gia" value="<?= intval($product['GIA']); ?>" hidden>
+                                    <input type="number" name="soluong" class="soluong" value="1" hidden id="formSoluong">    
+
+                                    <a class="btnpay" href="pay.php" style="cursor: pointer;">
+                                        <i class="fa-brands fa-cc-amazon-pay"></i> THANH TOÁN
+                                    </a>
+                                </form>
+
+                                <script>
+                                    document.querySelector('.btnpay').addEventListener('click', function(event) {
+                                        event.preventDefault();
+
+                                        const formData = new FormData(document.querySelector('.form-cart'));
+                                        const data = {
+                                            masp: formData.get('masp'),
+                                            tensp: formData.get('tensp'),
+                                            gia: formData.get('gia'),
+                                            soluong: formData.get('soluong'),
+                                        };
+
+                                        fetch(`cart.php?action=pay`, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(data)
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                window.location.href = 'pay.php';
+                                            })
+                                            .catch(error => console.error('Error:', error));
+                                    });
+                                </script>
                             </td>
                         </tr>
                     </table>
