@@ -114,29 +114,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
                     <td>{$item['soluong']}</td>
                     <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
-                    <td><a href='?action=remove&$masp={$item['masp']}' style='color: red;'>Xóa</a></td>
-                  </tr>";
+                    </tr>";
                 }
             } else {
-                echo "<tr><td colspan='4'>Giỏ hàng trống</td></tr>";
+                echo "<tr><td colspan='5'>Giỏ hàng trống</td></tr>";
             }
             ?>
+            <!-- <td><a href='?action=remove&$masp={$item['masp']}' style='color: red;'>Xóa</a></td> -->
             <tr>
-                <td colspan="3"><strong>Tổng cộng</strong></td>
+                <td colspan="4"><strong>Tổng cộng</strong></td>
                 <td><strong><?php echo number_format($total, 0, ',', '.'); ?> đ</strong></td>
             </tr>
         </table>
         <tr>
             <td colspan="2" align="left">
-                <a href="pay.php" style="text-decoration: none; color: blue; font-size: 16px;">
-                    Thanh toán
+                <a href="trangchu.php" style="text-decoration: none; color: blue; font-size: 16px;">
+                    &larr; Tiếp tục mua hàng
                 </a>
             </td>
         </tr>
         <tr>
             <td colspan="2" align="left">
-                <a href="trangchu.php" style="text-decoration: none; color: blue; font-size: 16px;">
-                    &larr; Tiếp tục mua hàng
+                <a href="pay.php" style="text-decoration: none; color: blue; font-size: 16px;">
+                    Thanh toán
                 </a>
             </td>
         </tr>
@@ -147,3 +147,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+<style>
+    article {
+        margin: 40px 10%;
+        overflow: hidden;
+    }
+
+    h2 {
+        text-align: center;
+        color: #815854;
+    }
+
+    table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    
+</style>

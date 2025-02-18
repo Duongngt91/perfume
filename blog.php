@@ -16,6 +16,36 @@ $product = mysqli_fetch_assoc($result);
 if (!$product) {
     die("Product not found.");
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    // Kiểm tra dữ liệu hợp lệ trước khi lưu vào session
+    if (!isset($data['masp']) || !isset($data['tensp']) || !isset($data['gia']) || !isset($data['soluong'])) {
+        echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ"]);
+        exit;
+    }
+
+    if (!isset($_SESSION['pay'])) {
+        $_SESSION['pay'] = [];
+    }
+
+    $found = false;
+    foreach ($_SESSION['pay'] as &$item) {
+        if ($item['masp'] == $data['masp']) {
+            $item['soluong'] += $data['soluong'];
+            $found = true;
+            break;
+        }
+    }
+
+    if (!$found) {
+        $_SESSION['pay'][] = $data;
+    }
+
+    echo json_encode(["status" => "success", "pay" => $_SESSION['pay']]);
+    exit;
+}
 ?>
 <html>
 
@@ -29,8 +59,8 @@ if (!$product) {
 <body>
     <?php include 'header.php'; ?>
     <?php include 'nav.php'; ?>
-    <article>
-        <table border="0" width="80%" align="center" cellspacing="0" cellpadding="10" style="background-color: #fff; margin-top: 30px; box-shadow: 0 0 10px #ccc;">
+    <article style="margin: 30px auto;">
+        <table border="0" width="80%" align="center" cellspacing="0" cellpadding="10" style="background-color: #fff; margin: 30px 10%; box-shadow: 0 0 10px #ccc;">
             <tr>
                 <td align="center" width="50%" style="border-right: 1px solid #ddd;">
                     <img src="<?= htmlspecialchars($product['HINHANH']); ?>" alt="imgPerfume" width="90%">
@@ -112,14 +142,11 @@ if (!$product) {
                     </ul>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2" align="left">
-                    <a href="trangchu.php" style="text-decoration: none; color: blue; font-size: 16px;">
-                        &larr; Quay về Trang chủ
-                    </a>
-                </td>
-            </tr>
         </table>
+
+        <a href="trangchu.php" style="text-decoration: none; color: blue; font-size: 16px; margin-left: 10%;">
+            &larr; Quay về Trang chủ
+        </a>
     </article>
 
     <!-- Notification -->
@@ -193,7 +220,7 @@ if (!$product) {
         position: fixed;
         right: 10px;
         top: 10px;
-        background-color:rgb(56, 209, 68);
+        background-color: rgb(56, 209, 68);
         color: white;
         padding: 10px 20px;
         border-radius: 10px;
