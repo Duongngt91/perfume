@@ -1,0 +1,206 @@
+{% load static%}
+{% load humanize%}
+
+{% include 'pf/head.html'%}
+<body>
+
+   {% include 'pf/header.html'%}
+ 
+    {% include 'pf/nav.html'%}
+    
+    {% include 'pf/aside.html'%}
+  
+
+<article id="rwapper">
+{%for m,sps in danh_muc_sp.items%}
+        <h3>
+            <a href="" class="headline" style="font-size: 30px;">
+              {{m.tendm}}
+            </a>
+        </h3>
+        <h4>
+            <a href=" {% url "sm" m.madm %}" class="See-more">Xem thêm <i class="fa-solid fa-angle-right"></i></a>
+        </h4>
+
+
+        <ul style="gap: 15px; padding: 0px 7%;margin-left:215px">
+       {% for sp in sps%}
+            <li>
+                <form action="" class="product-item">
+                    
+                    <a href="{% url "ct" sp.masp %}" class="product-top"><img src="{% static '' %}{{ sp.hinh }}" alt=""></a>
+                    <p> <a href="{% url "ct" sp.masp %}" class="product-info"> {{sp.tensp}}</a> </p>
+                    <p><a href="{% url "ct" sp.masp %}" class="product-price">Giá:{{sp.gia|floatformat:0|intcomma}}  ₫</a></p>
+                    <a href="blog.php" class="buy-now" ><i class="fa-solid fa-cart-shopping"></i><i class="fa-regular fa-eye"></i></a>
+                </form>
+            </li>
+        {%endfor%}
+        
+            
+        </ul>
+{%endfor%}
+</article>
+
+ {% include 'pf/footer.html'%}
+
+    
+   
+
+</body>
+</html>
+<style>
+    /* headline */
+    h3 {
+        font-size: 20px;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        border: 2px solid gray;
+        margin: 0 auto;
+        width: 40%;
+        border-radius: 30px;
+        text-align: center;
+    }
+
+    .headline {
+        text-decoration: none;
+        color: black;
+    }
+
+    /* Xem thêm */
+    h4 {
+        font-size: 18px;
+        text-transform: uppercase;
+        width: 10%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: 5%;
+    }
+
+    h4 a {
+        color: #555;
+        transition: 0.5s;
+        text-decoration: none;
+    }
+
+    h4 a:hover {
+        color: #f36f40;
+        transition: 0.5s;
+    }
+
+    /* Sản phẩm */
+    .product-item {
+        position: relative;
+        overflow: hidden;
+        transition: 0.5s;
+    }
+    .product-item:hover{
+        
+        box-shadow: 0px 0px 17px 2px gray;
+        transition: 0.5s;
+    }
+    .product-item a {
+        display: block;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+
+    .product-top img {
+        height: auto;
+        transition: 0.5s;
+        width: 140px;
+        height: 140px;
+    }
+
+
+    .product-item:hover .product-top img {
+        transform: scale(1.1);
+        transition: 0.5s;
+    }
+
+    .product-info {
+        white-space: nowrap;
+        /* Ngăn không cho văn bản xuống dòng */
+        overflow: hidden;
+        /* Ẩn phần văn bản vượt quá vùng chứa */
+        text-overflow: ellipsis;
+        /* Thêm "..." ở cuối văn bản bị cắt */
+        width: 140px;
+        /* Chiều rộng của vùng chứa */
+        /* text-align: center; */
+        padding-top: 15px;
+        text-decoration: none;
+        color: black;
+    }
+
+    #rwapper ul {
+        display: flex;
+        list-style-type: none;
+    }
+
+    .product-price {
+        position: relative;
+        font-size: 16px;
+        text-decoration: none;
+        transform: scale(1);
+        transition: all .4s ease-out;
+        color: red;
+        display: block;
+        line-height: 1;
+        left: 5px;
+    }
+
+    .buy-now {
+        position: absolute;
+        bottom: 22px;
+        font-size: 17px;
+        left: 5px;
+        transform: scale(0);
+        opacity: 0;
+        text-decoration: none;
+        transition: all .4s ease-out;
+        text-align: center;
+        z-index: 1;
+    }
+
+    .product-info:hover+.product-price,
+    .product-top:hover~.product-price,
+    .product-item:hover .product-price {
+        transform: scale(0);
+        transition: all .4s ease-out;
+        opacity: 0;
+    }
+
+    .product-price:hover+.buy-now,
+    .product-info:hover~.buy-now,
+    .product-top:hover~.buy-now,
+    .product-item:hover .buy-now {
+        transform: scale(1);
+        opacity: 1;
+        transition: all .4s ease-out;
+    }
+
+    .product-item:hover .buy-now {
+        transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .product-item .buy-now {
+        left: 15px;
+        bottom: 15px;
+    }
+
+    .buy-now i {
+        margin: 0 5px;
+        border: 2px solid green;
+        padding: 5px 5px;
+        border-radius: 5px;
+        color: green;
+        transition: 0.3s;
+    }
+
+    .buy-now i:hover {
+        background-color: green;
+        color: white;
+        transition: 0.3s;
+    }
+</style>

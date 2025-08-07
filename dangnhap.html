@@ -1,0 +1,144 @@
+<html>
+<body id="body">
+   
+
+     {% include 'pf/header.html' %}
+   {% include 'pf/nav.html' %}
+  {% include 'pf/aside.html' %}
+    <article class="login">
+        <form action="dangnhap.php" class="Q2" method="post">
+            <table class="A5">
+                <tr>
+                    <td>
+                        <h1 class="qq" style="padding: 30px;font-size: 35px;">Đăng Nhập</h1>
+                    </td>
+                </tr>
+                <tr class="form-group">
+                    <td class="ee"><i class="fa-regular fa-user" padding-top: 10px></i>
+                        <input name="txtSurname" type="text" class="form-input" placeholder="Tên Đăng Nhập">
+                    </td>
+                </tr>
+                <tr class="form-group">
+                    <td class="ee"><i class="fa-solid fa-lock" padding-top: 10px></i>
+                        <input name="txtNhappassword" type="password" class="form-input form-password" placeholder="Mật Khẩu">
+                    </td>
+                    <!-- <i class="fa-regular fa-eye"></i> -->
+                </tr>
+                <tr>
+                    <td class="form-btn">
+                        <!-- <a name="btnDangNhap" class="form-submit"> -->
+                        <!-- Đăng Nhập -->
+                        <input name="btnDangNhap" type="submit" value="Đăng Nhập" class="form-submit">
+                        <!-- </a>     -->
+                        <!-- <a href="dangky.php" class="form-submit">
+                            Tạo tài khoản -->
+                        <input type="submit" value="Tạo tài khoản" class="form-submit">
+                        <!-- </a> -->
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </article>
+   {% include 'pf/footer.html' %}
+</body>
+
+</html>
+
+<style>
+    .login {
+        margin: 0 0%;
+        width: 100%;
+    }
+
+    .Q2 {
+        min-height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 500px;
+        margin-right: 500px;
+        height: auto;
+    }
+
+    i {
+        padding-top: 0px;
+    }
+
+    table.A5 {
+        width: 100%;
+        background: #815854;
+        padding: 30px 30px 40px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0px 0px 17px 2px white;
+    }
+
+    tr {
+        width: 100%;
+    }
+
+    .qq {
+        text-align: center;
+        color: #F9EBDE;
+    }
+
+    .form-group {
+        color: #fff;
+        font-size: 14px;
+        padding-top: 5px;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+    .form-submit {
+        background: transparent;
+        border: 1px solid #fcfcfc;
+        color: #fff;
+        width: 100%;
+        text-transform: uppercase;
+        padding: 6PX 30px;
+        transition: 0.25s ease-in-out;
+        border-radius: 5px;
+        margin: 0 5px;
+    }
+
+    .ee {
+        display: flex;
+        margin-bottom: 10px;
+        align-items: center;
+
+    }
+
+    i {
+        margin: 5px;
+    }
+
+    .form-input {
+        width: 95%;
+        background: transparent;
+        border: 1px;
+        border-bottom: 1px solid white;
+        color: #fff;
+    }
+
+    .form-submit:hover {
+        border-color: #1fff1f;
+
+    }
+
+    .form-password {
+        width: 95%;
+    }
+
+    .form-btn {
+        display: flex;
+    }
+
+    .form-btn a {
+        text-align: center;
+    }
+
+    .form-btn a:first-child {
+        margin-right: 50px;
+    }
+</style>
