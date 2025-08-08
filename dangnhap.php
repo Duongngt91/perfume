@@ -37,11 +37,12 @@
             echo "<p class = 'zz'>Đăng nhập thành công.</p>";
             $row = mysqli_fetch_assoc($result);
 
-            // Lưu thông tin vào session
-            $_SESSION['username'] = $row['TENDANGNHAP'];
-            $_SESSION['phanquyen'] = $row['PHANQUYEN'];
-
-            header("Location: trangchu.php");
+            //nếu phan quyền là user thì sẽ chuyển đến trang tragchu.php
+            if ($row['PHANQUYEN'] === 'user') {
+                header("Location: trangchu.php");
+            } elseif ($row['PHANQUYEN'] === 'admin') {
+                header("Location: admin.php");
+            }
         }
     }
     ?>

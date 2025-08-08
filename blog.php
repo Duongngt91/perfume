@@ -46,17 +46,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo json_encode(["status" => "success", "pay" => $_SESSION['pay']]);
     exit;
 }
-?>
-<html>
-
+?><!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Blog</title>
     <link rel="icon" type="image/x-icon" href="anh/logo.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-
 <body>
+    
     <?php include 'header.php'; ?>
     <?php include 'nav.php'; ?>
     <article style="margin: 30px auto;">
@@ -129,7 +128,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </script>
                             </td>
                             <td>
-<<<<<<< HEAD
                                 <action="pay.php">
                                     <input type="text" name="masp" value="<?= htmlspecialchars($product['MASP']); ?>" hidden>
                                     <input type="text" name="tensp" value="<?= htmlspecialchars($product['TENSP']); ?>" hidden>
@@ -166,19 +164,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 .catch(error => console.error('Error:', error));
                                         });
                                     </script>
-                                </actio>
-=======
-                                <form action="">
-                                    <input type="text" name="masp" value="<?= htmlspecialchars($product['MASP']); ?>" hidden>
-                                    <input type="text" name="tensp" value="<?= htmlspecialchars($product['TENSP']); ?>" hidden>
-                                    <input type="text" name="gia" value="<?= intval($product['GIA']); ?>" hidden>
-                                    <input type="number" name="soluong" class="soluong" value="1" hidden id="formSoluong">    
-
-                                    <a class="btnpay" href="pay.php" style="cursor: pointer;">
-                                        <i class="fa-brands fa-cc-amazon-pay"></i> THANH TOÁN
-                                    </a>
-                                </form>
-
+                                </action>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        var btnbot = document.querySelector(".btnbot");
+                                        var btnthem = document.querySelector(".btnthem");
+                                        var input = document.querySelector(".soluong");
+                            
+                                        btnbot.addEventListener("click", function() {
+                                            var value = parseInt(input.value, 10);
+                                            if (value > 1) {
+                                                value--;
+                                                input.value = value;
+                            
+                                                const formSoluong = document.getElementById('formSoluong');
+                                                formSoluong.value = value;
+                                            }
+                                        });
+                            
+                                        btnthem.addEventListener("click", function() {
+                                            var value = parseInt(input.value, 10);
+                                            value++;
+                                            input.value = value;
+                            
+                                            const formSoluong = document.getElementById('formSoluong');
+                                            formSoluong.value = value;
+                                        });
+                                    });
+                                </script>
                                 <script>
                                     document.querySelector('.btnpay').addEventListener('click', function(event) {
                                         event.preventDefault();
@@ -205,7 +218,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             .catch(error => console.error('Error:', error));
                                     });
                                 </script>
->>>>>>> 23d470166dcf1d4f37547c5a27f5df4035c56169
                             </td>
                         </tr>
                     </table>
@@ -229,41 +241,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </aside>
 
     <?php include 'footer.php'; ?>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var btnbot = document.querySelector(".btnbot");
-            var btnthem = document.querySelector(".btnthem");
-            var input = document.querySelector(".soluong");
-
-            btnbot.addEventListener("click", function() {
-                var value = parseInt(input.value, 10);
-                if (value > 1) {
-                    value--;
-                    input.value = value;
-
-                    const formSoluong = document.getElementById('formSoluong');
-                    formSoluong.value = value;
-                }
-            });
-
-            btnthem.addEventListener("click", function() {
-                var value = parseInt(input.value, 10);
-                value++;
-                input.value = value;
-
-                const formSoluong = document.getElementById('formSoluong');
-                formSoluong.value = value;
-            });
-        });
-    </script>
 </body>
 
 </html>
 <style>
-    .btnmore {
+    .btnmore{
         background-color: #008800;
         color: #fff;
-        padding: 10px 20px;
+        padding: 10px 10px;
         border-radius: 20px;
         text-decoration: none;
         transition: 0.5s;
@@ -278,7 +263,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .btnpay {
         background-color: #EE0000;
         color: #fff;
-        padding: 10px 20px;
+        padding: 10px 10px;
         border-radius: 20px;
         text-decoration: none;
         transition: 0.5s;

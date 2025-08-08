@@ -10,7 +10,10 @@
 
 <body>
     <?php
-
+    // Bắt đầu session nếu chưa có
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     include 'header.php';
     include 'nav.php';
     include 'aside.php';
