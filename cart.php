@@ -6,6 +6,29 @@ if (!isset($_SESSION)) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Nếu action là pay thì xử lý thanh toán
+    if (isset($_GET["action"]) && $_GET["action"] == "pay") {
+
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        // Kiểm tra dữ liệu hợp lệ trước khi lưu vào session
+        if (!isset($data['masp']) || !isset($data['tensp']) || !isset($data['gia']) || !isset($data['soluong'])) {
+            echo json_encode(["status" => "error", "message" => "Dữ liệu không hợp lệ"]);
+            exit;
+        }
+
+        // Xoá giá trị cũ trong session pay
+        if (isset($_SESSION['pay'])) {
+            unset($_SESSION['pay']);
+        }
+
+        // Thêm sản phẩm vào session pay
+        $_SESSION['pay'][] = $data;
+
+        echo json_encode(["status" => "success"]);
+        exit;
+    }
+
     //// Xử lý xóa sản phẩm khỏi giỏ hàng
     if (isset($_GET["action"]) && $_GET["action"] == "remove") {
         if (!isset($_GET["masp"])) {

@@ -1,20 +1,11 @@
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <title>Mua ngay</title>
-    <link rel="stylesheet" href="trangchu.css">
-    <link rel="icon" type="image/x-icon" href="anh/logo.webp">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
+{% include 'pf/head.html'; %}
 
 <body>
-    <?php
-
-    include 'header.php';
-    include 'nav.php';
-    include 'aside.php';
-    ?>
+    {% include 'pf/header.html'; %}
+    {% include 'pf/nav.html'; %}
+    {% include 'pf/aside.html'; %}
     <article>
         <main>
             <form action="pay.php" method="post" class="payment">
@@ -34,8 +25,45 @@
                             </tr>
                             <?php
                             $total = 0;
-                            $hasItems = false;
+                            if (!empty($_SESSION['cart'])) {
+                                foreach ($_SESSION['cart'] as $item) {
+                                    // Kiểm tra dữ liệu trước khi sử dụng
+                                    if (!isset($item['tensp']) || !isset($item['gia']) || !isset($item['soluong'])) {
+                                        continue;
+                                    }
+                                    $subtotal = $item['gia'] * $item['soluong'];
+                                    $total += $subtotal;
+                                    // Nếu chưa có openconnection() và closeconnection() thì thêm vào
+                                    if (!function_exists('openconnection')) {
+                                        include 'connect.php';
+                                    }
+                                    $conn = openconnection();
 
+                                    // Truy vấn dữ liệu từ database
+                                    $sql = "SELECT * FROM sanpham WHERE masp = '{$item['masp']}'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $product = mysqli_fetch_assoc($result);
+                                    echo "<tr>
+                                    <td><img src='{$product['HINHANH']}' alt='imgPerfume' width='100'></td>
+                                    <td>{$item['tensp']}</td>
+                                    <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
+                                    <td>{$item['soluong']}</td>
+                                    <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
+                                  </tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='5'>Giỏ hàng trống</td></tr>";
+                            }
+                            if (!empty($_SESSION['pay'])) {
+                                foreach ($_SESSION['pay'] as $item) {
+                                    // Kiểm tra dữ liệu trước khi sử dụng
+                                    if (!isset($item['tensp']) || !isset($item['gia']) || !isset($item['soluong'])) {
+                                        continue;
+                                    }
+                                    $subtotal = $item['gia'] * $item['soluong'];
+                                    $total += $subtotal;
+                                    $hasItems = false;
+                                }}
                             include 'connect.php';
                             $conn = openconnection();
 
@@ -63,24 +91,13 @@
                                             <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
                                         </tr>";
                                 }
-                            } else {
-                                echo "<tr><td colspan='5'>Giỏ hàng trống</td></tr>";
                             }
-                            if (!empty($_SESSION['pay'])) {
-                                foreach ($_SESSION['pay'] as $item) {
-                                    // Kiểm tra dữ liệu trước khi sử dụng
-                                    if (!isset($item['tensp']) || !isset($item['gia']) || !isset($item['soluong'])) {
-                                        continue;
-                                    }
-                                    $subtotal = $item['gia'] * $item['soluong'];
-                                    $total += $subtotal;
-                                    // Nếu chưa có openconnection() và closeconnection() thì thêm vào
-                                    if (!function_exists('openconnection')) {
-                                        include 'connect.php';
-                                    }
-                                    $conn = openconnection();
+                            // Nếu không có pay thì xử lý cart
+                            else if (!empty($_SESSION['cart'])) {
+                                $hasItems = true;
+                                foreach ($_SESSION['cart'] as $item) {
+                                    if (!isset($item['tensp'], $item['gia'], $item['soluong'])) continue;
 
-                                    // Truy vấn dữ liệu từ database
                                     $sql = "SELECT * FROM sanpham WHERE masp = '{$item['masp']}'";
                                     $result = mysqli_query($conn, $sql);
                                     $product = mysqli_fetch_assoc($result);
@@ -96,7 +113,10 @@
                                             <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
                                         </tr>";
                                 }
-                            } else {
+                            }
+
+                            // Hiển thị thông báo nếu không có item nào
+                            if (!$item) {
                                 echo "<tr><td colspan='5'>Giỏ hàng trống</td></tr>";
                             }
                             ?>
@@ -189,10 +209,9 @@
         list-style-type: none;
     }
 
-    .payment ul li table tr td {
+    .payment ul li table tr td{
         padding: 5px 5px;
     }
-
     .btnpay {
         background-color: #008800;
         color: #fff;

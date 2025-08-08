@@ -1,0 +1,49 @@
+<html>
+
+{% include 'pf/head.html'; %}
+
+<body>
+    {% include 'pf/header.html'; %}
+    {% include 'pf/nav.html'; %}
+    {% include 'pf/aside.html'; %}
+    <article>
+        <ul class="payment">
+            <li>
+                <div class="bank-info">
+                    <h4>Thông tin tài khoản</h4>
+                    <p>Ngân hàng: BIDV</p>
+                    <p>Chủ tài khoản: Nguyễn Tùng Dương</p>
+                    <p>Số tài khoản: 0929496129</p>
+                    <p>Chi nhánh: Chợ lớn</p>
+                    <img src="anh/anhbank.jpg" alt="QR Code thanh toán" style="width: 300px; height: 300px;">
+                    <p>Quét mã QR để thanh toán nhanh</p>
+                </div>
+            </li>
+            <li>
+                <a href="nhanhang.php">
+                    <button type="submit">Xác nhận thanh toán</button>
+
+                </a>
+            </li>
+        </ul>
+    </article>
+    <?php
+    include 'footer.php';
+    ?>
+</body>
+
+</html>
+<style>
+    article ul {
+        text-align: center;
+    }
+
+    article ul li {
+        list-style-type: none;
+    }
+
+    h4 {
+        color: #815854;
+        font-size: 50px;
+    }
+</style>
