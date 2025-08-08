@@ -34,7 +34,7 @@
 
             <?php if ($_SESSION['phanquyen'] === 'admin'): ?>
                 <li>
-                    <a href="#"><i class="fa-solid fa-gear"></i> Quản trị</a>
+                    <a href="admin.php"><i class="fa-solid fa-gear"></i> Quản trị</a>
                 </li>
             <?php endif; ?>
 

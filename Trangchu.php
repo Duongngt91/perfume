@@ -1,5 +1,5 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Dương Perfume</title>
@@ -7,7 +7,6 @@
     <link rel="icon" type="image/x-icon" href="anh/logo.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-
 <body>
     <?php
     // Nếu không có session, thì sẽ tạo session
@@ -30,5 +29,4 @@
     include 'footer.php';
     ?>
 </body>
-
 </html>

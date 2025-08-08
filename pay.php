@@ -10,7 +10,7 @@
 
 <body>
     <?php
-    session_start();
+
     include 'header.php';
     include 'nav.php';
     include 'aside.php';
@@ -71,25 +71,61 @@
                                     }
                                     $subtotal = $item['gia'] * $item['soluong'];
                                     $total += $subtotal;
-                                    // Nếu chưa có openconnection() và closeconnection() thì thêm vào
-                                    if (!function_exists('openconnection')) {
-                                        include 'connect.php';
-                                    }
-                                    $conn = openconnection();
+                                    $hasItems = false;
+                                }}
+                            include 'connect.php';
+                            $conn = openconnection();
 
-                                    // Truy vấn dữ liệu từ database
+                            // Xử lý session pay trước nếu tồn tại
+                            if (!empty($_SESSION['pay'])) {
+                                $hasItems = true;
+
+                                foreach ($_SESSION['pay'] as $item) {
+                                    echo $item['masp'];
+                                    if (!isset($item['tensp'], $item['gia'], $item['soluong'])) continue;
+
+
                                     $sql = "SELECT * FROM sanpham WHERE masp = '{$item['masp']}'";
                                     $result = mysqli_query($conn, $sql);
                                     $product = mysqli_fetch_assoc($result);
+
+                                    $subtotal = $item['gia'] * $item['soluong'];
+                                    $total += $subtotal;
+
                                     echo "<tr>
-                                    <td><img src='{$product['HINHANH']}' alt='imgPerfume' width='100'></td>
-                                    <td>{$item['tensp']}</td>
-                                    <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
-                                    <td>{$item['soluong']}</td>
-                                    <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
-                                  </tr>";
+                                            <td><img src='{$product['HINHANH']}' alt='imgPerfume' width='100'></td>
+                                            <td>{$item['tensp']}</td>
+                                            <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
+                                            <td>{$item['soluong']}</td>
+                                            <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
+                                        </tr>";
                                 }
-                            } else {
+                            }
+                            // Nếu không có pay thì xử lý cart
+                            else if (!empty($_SESSION['cart'])) {
+                                $hasItems = true;
+                                foreach ($_SESSION['cart'] as $item) {
+                                    if (!isset($item['tensp'], $item['gia'], $item['soluong'])) continue;
+
+                                    $sql = "SELECT * FROM sanpham WHERE masp = '{$item['masp']}'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $product = mysqli_fetch_assoc($result);
+
+                                    $subtotal = $item['gia'] * $item['soluong'];
+                                    $total += $subtotal;
+
+                                    echo "<tr>
+                                            <td><img src='{$product['HINHANH']}' alt='imgPerfume' width='100'></td>
+                                            <td>{$item['tensp']}</td>
+                                            <td>" . number_format($item['gia'], 0, ',', '.') . " đ</td>
+                                            <td>{$item['soluong']}</td>
+                                            <td>" . number_format($subtotal, 0, ',', '.') . " đ</td>
+                                        </tr>";
+                                }
+                            }
+
+                            // Hiển thị thông báo nếu không có item nào
+                            if (!$item) {
                                 echo "<tr><td colspan='5'>Giỏ hàng trống</td></tr>";
                             }
                             ?>

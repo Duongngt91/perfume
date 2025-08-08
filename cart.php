@@ -126,19 +126,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td><strong><?php echo number_format($total, 0, ',', '.'); ?> đ</strong></td>
             </tr>
         </table>
-        <tr>
-            <td colspan="2" align="left">
-                <a href="trangchu.php" style="text-decoration: none; color: blue; font-size: 16px;">
-                    &larr; Tiếp tục mua hàng
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="left">
-                <a href="pay.php" style="text-decoration: none; color: blue; font-size: 16px;">
-                    Thanh toán
-                </a>
-            </td>
+
+        <a href="trangchu.php" style="text-decoration: none; color: blue; font-size: 16px;padding: 15px 10%;">
+            Tiếp tục mua hàng
+        </a>
+
+        <a href="pay.php" style="text-decoration: none; color: blue; font-size: 16px;padding-left: 54%;">
+            Thanh toán
+        </a>
+
         </tr>
     </article>
     <?php
@@ -164,6 +160,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         margin: 0 auto;
         text-align: center;
     }
-
-    
 </style>

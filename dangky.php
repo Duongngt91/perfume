@@ -70,7 +70,7 @@
     <?php
     include 'aside.php';
     ?>
-    <article class="br" style="margin-top: 40px;">
+    <article class="br">
         <form action="dangky.php" class="Q3" method="post">
             <table class="A5">
                 <tr>
@@ -156,6 +156,7 @@
         margin-left: 500px;
         margin-right: 500px;
         height: auto;
+        padding: 30px 30px;
     }
 
     table.A5 {
